@@ -1139,7 +1139,7 @@ def login_page():
     col1, col2, col3 = st.columns([1, 3, 1])
     
     with col2:
-        st.markdown('<div class="main-header">📚 AMO Physics Library</div>', unsafe_allow_html=True)
+        st.markdown('<div class="main-header">AMO Physics Library</div>', unsafe_allow_html=True)
         
         # Add debug toggle in sidebar (only visible in development)
         with st.sidebar:
@@ -1148,7 +1148,7 @@ def login_page():
         
         with st.container():
             st.markdown('<div class="card">', unsafe_allow_html=True)
-            st.markdown('<div class="sub-header">🔐 Login</div>', unsafe_allow_html=True)
+            st.markdown('<div class="sub-header">Login</div>', unsafe_allow_html=True)
             
             username = st.text_input("Username", key="login_username")
             password = st.text_input("Password", type="password", key="login_password")
@@ -1188,7 +1188,7 @@ def login_page():
             if st.session_state.get('show_register', False):
                 with st.container():
                     st.markdown('<div class="card" style="margin-top: 2rem;">', unsafe_allow_html=True)
-                    st.markdown('<div class="sub-header">📝 Member Registration</div>', unsafe_allow_html=True)
+                    st.markdown('<div class="sub-header">Member Registration</div>', unsafe_allow_html=True)
                     
                     reg_name = st.text_input("Full Name*")
                     reg_email = st.text_input("Email")
@@ -1197,7 +1197,7 @@ def login_page():
                     reg_confirm = st.text_input("Confirm Password*", type="password")
                     reg_member_id = st.text_input("Member ID (Provided by Admin)*", placeholder="Enter ID provided by admin")
                     
-                    st.info("ℹ️ Please contact admin to get a Member ID for registration.")
+                    st.info("Please contact admin to get a Member ID for registration.")
                     
                     col_reg1, col_reg2 = st.columns(2)
                     with col_reg1:
@@ -1241,17 +1241,17 @@ def login_page():
 
 def admin_dashboard():
     """Admin dashboard"""
-    st.sidebar.markdown(f"**👨‍💼 Admin:** {st.session_state.user}")
+    st.sidebar.markdown(f"**Admin:** {st.session_state.user}")
     st.sidebar.markdown("---")
     
     menu = st.sidebar.radio(
         "Navigation",
-        ["Dashboard", "Book Management", "Member Management", "Reports", "Settings", "Librarian Tools", "PDF Downloads", "⚙️ Site Settings"],
+        ["Dashboard", "Book Management", "Member Management", "Reports", "Settings", "Librarian Tools", "PDF Downloads", "Site Settings"],
         index=0
     )
     
     if menu == "Dashboard":
-        st.markdown('<div class="main-header">📊 Dashboard</div>', unsafe_allow_html=True)
+        st.markdown('<div class="main-header">Dashboard</div>', unsafe_allow_html=True)
         
         books = load_books()
         users = load_users()
@@ -1293,7 +1293,7 @@ def admin_dashboard():
             </div>
             """, unsafe_allow_html=True)
         
-        st.markdown('<div class="sub-header">📈 Recent Activities</div>', unsafe_allow_html=True)
+        st.markdown('<div class="sub-header"> Recent Activities</div>', unsafe_allow_html=True)
         
         recent_activities = []
         books_sorted = sorted(books, key=lambda x: x.get('added_date', ''), reverse=True)
@@ -1353,10 +1353,10 @@ def site_settings_page():
     """Site settings page for favicon configuration"""
     st.markdown('<div class="main-header">⚙️ Site Settings</div>', unsafe_allow_html=True)
     
-    tab1, tab2 = st.tabs(["🎨 Favicon Settings", "📊 Site Statistics"])
+    tab1, tab2 = st.tabs([" Favicon Settings", " Site Statistics"])
     
     with tab1:
-        st.markdown('<div class="sub-header">🎨 Favicon Customization</div>', unsafe_allow_html=True)
+        st.markdown('<div class="sub-header">Favicon Customization</div>', unsafe_allow_html=True)
         
         favicon_settings = load_favicon_setting()
         
@@ -1394,7 +1394,7 @@ def site_settings_page():
                         "favicon_path": None
                     }
                     save_favicon_setting(new_settings)
-                    st.success("✅ Favicon settings saved! Refresh the page to see changes.")
+                    st.success("Favicon settings saved! Refresh the page to see changes.")
                     st.balloons()
                 else:
                     if favicon_image:
@@ -1406,12 +1406,12 @@ def site_settings_page():
                                 "favicon_path": saved_path
                             }
                             save_favicon_setting(new_settings)
-                            st.success("✅ Favicon image uploaded and settings saved! Refresh the page to see changes.")
+                            st.success("Favicon image uploaded and settings saved! Refresh the page to see changes.")
                             st.balloons()
                         else:
-                            st.error("❌ Failed to save favicon image.")
+                            st.error(" Failed to save favicon image.")
                     else:
-                        st.error("❌ Please select an image to upload.")
+                        st.error("Please select an image to upload.")
         
         st.markdown("---")
         st.markdown('<div class="sub-header">👁️ Preview</div>', unsafe_allow_html=True)
@@ -1492,7 +1492,7 @@ def pdf_downloads_page():
             st.metric("Most Downloaded Book", most_downloaded["total_downloads"])
             st.caption(f"{most_downloaded['title']}")
     
-    st.markdown('<div class="sub-header">📊 Download Statistics by Book</div>', unsafe_allow_html=True)
+    st.markdown('<div class="sub-header">Download Statistics by Book</div>', unsafe_allow_html=True)
     
     search_term = st.text_input("🔍 Search books", placeholder="Search by book title or author")
     
@@ -1515,14 +1515,14 @@ def pdf_downloads_page():
         sorted_books = sorted(filtered_books.items(), key=lambda x: x[1]["total_downloads"], reverse=True)
         
         for book_key, data in sorted_books:
-            with st.expander(f"📚 {data['title']} by {data['author']} - {data['total_downloads']} downloads", expanded=False):
+            with st.expander(f"{data['title']} by {data['author']} - {data['total_downloads']} downloads", expanded=False):
                 col1, col2 = st.columns(2)
                 
                 with col1:
-                    st.write("**📈 Download Statistics:**")
+                    st.write("**Download Statistics:**")
                     st.write(f"**Total Downloads:** {data['total_downloads']}")
                     
-                    st.write("**👥 Downloads by User:**")
+                    st.write("**Downloads by User:**")
                     if data.get('user_downloads'):
                         for user, count in sorted(data['user_downloads'].items(), key=lambda x: x[1], reverse=True):
                             st.write(f"- **{user}**: {count} download(s)")
@@ -1530,7 +1530,7 @@ def pdf_downloads_page():
                         st.write("No user-specific data available")
                 
                 with col2:
-                    st.write("**🕒 Recent Downloads:**")
+                    st.write("**Recent Downloads:**")
                     if data.get('download_times'):
                         recent_downloads = sorted(data['download_times'], key=lambda x: x['timestamp'], reverse=True)[:10]
                         for download in recent_downloads:
@@ -1586,12 +1586,12 @@ def export_book_downloads(book_data):
 
 def librarian_tools():
     """Librarian tools for manual book operations"""
-    st.markdown('<div class="main-header">📚 Librarian Tools</div>', unsafe_allow_html=True)
+    st.markdown('<div class="main-header">Librarian Tools</div>', unsafe_allow_html=True)
     
-    tab1, tab2 = st.tabs(["📖 Manual Book Borrow", "↩️ Manual Book Return"])
+    tab1, tab2 = st.tabs(["Manual Book Borrow", "Manual Book Return"])
     
     with tab1:
-        st.markdown('<div class="sub-header">📖 Borrow Book for Member</div>', unsafe_allow_html=True)
+        st.markdown('<div class="sub-header">Borrow Book for Member</div>', unsafe_allow_html=True)
         
         books = load_books()
         users = load_users()
@@ -1600,9 +1600,9 @@ def librarian_tools():
         members = {k: v for k, v in users.items() if v.get('role') == 'member'}
         
         if not available_books:
-            st.warning("❌ No available books to borrow (E-Books excluded from borrowing).")
+            st.warning("No available books to borrow (E-Books excluded from borrowing).")
         elif not members:
-            st.warning("❌ No members registered yet.")
+            st.warning("No members registered yet.")
         else:
             col1, col2 = st.columns(2)
             
@@ -1636,18 +1636,18 @@ def librarian_tools():
                     st.write(f"**Member ID:** {selected_member_info['member_id']}")
                     st.write(f"**Currently Borrowed:** {len(selected_member_info.get('borrowed_books', []))} books")
             
-            if st.button("✅ Borrow Book", type="primary", use_container_width=True):
+            if st.button("Borrow Book", type="primary", use_container_width=True):
                 if selected_book and selected_member_username:
                     if borrow_book_admin(selected_book, selected_member_username):
-                        st.success(f"✅ Book '{selected_book['title']}' borrowed by {selected_member_info['name']}!")
+                        st.success(f"Book '{selected_book['title']}' borrowed by {selected_member_info['name']}!")
                         st.balloons()
                         time.sleep(2)
                         st.rerun()
                     else:
-                        st.error("❌ Failed to borrow book. Please try again.")
+                        st.error("Failed to borrow book. Please try again.")
     
     with tab2:
-        st.markdown('<div class="sub-header">↩️ Return Book for Member</div>', unsafe_allow_html=True)
+        st.markdown('<div class="sub-header">Return Book for Member</div>', unsafe_allow_html=True)
         
         books = load_books()
         users = load_users()
@@ -1690,23 +1690,23 @@ def librarian_tools():
                     
                     st.write(f"**Borrowed Date:** {selected_book.get('borrowed_date', 'N/A')}")
                 
-                if st.button("↩️ Return Book", type="primary", use_container_width=True):
+                if st.button("Return Book", type="primary", use_container_width=True):
                     if return_book_admin(selected_book):
-                        st.success(f"✅ Book '{selected_book['title']}' returned successfully!")
+                        st.success(f"Book '{selected_book['title']}' returned successfully!")
                         st.balloons()
                         time.sleep(2)
                         st.rerun()
                     else:
-                        st.error("❌ Failed to return book. Please try again.")
+                        st.error("Failed to return book. Please try again.")
 
 def book_management():
     """Book management page"""
-    st.markdown('<div class="main-header">📚 Book Management</div>', unsafe_allow_html=True)
+    st.markdown('<div class="main-header">Book Management</div>', unsafe_allow_html=True)
     
     if 'editing_book' not in st.session_state:
         st.session_state.editing_book = None
     
-    tab1, tab2, tab3 = st.tabs(["📖 View All Books", "➕ Add New Book", "✏️ Update Book"])
+    tab1, tab2, tab3 = st.tabs(["View All Books", "➕ Add New Book", "Update Book"])
     
     with tab1:
         books = load_books()
@@ -1762,13 +1762,13 @@ def book_management():
                         col_edit, col_del = st.columns(2)
                         with col_edit:
                             book_key = generate_book_key(book)
-                            if st.button("✏️ Edit", key=f"edit_{book_key}_{idx}", help="Edit book", use_container_width=True):
+                            if st.button("Edit", key=f"edit_{book_key}_{idx}", help="Edit book", use_container_width=True):
                                 st.session_state.editing_book = book
                                 st.rerun()
                         with col_del:
-                            if st.button("🗑️ Delete", key=f"delete_{book_key}_{idx}", help="Delete book", use_container_width=True):
+                            if st.button("Delete", key=f"delete_{book_key}_{idx}", help="Delete book", use_container_width=True):
                                 if delete_book(book):
-                                    st.success("✅ Book deleted successfully!")
+                                    st.success("Book deleted successfully!")
                                     time.sleep(2)
                                     st.rerun()
                     
@@ -1862,20 +1862,20 @@ def book_management():
                         
                         books.append(new_book)
                         save_books(books)
-                        st.success(f"✅ Book '{title}' added successfully!")
+                        st.success(f"Book '{title}' added successfully!")
                         st.balloons()
                         time.sleep(2)
                         st.rerun()
                 else:
-                    st.error("⚠️ Please fill in all required fields (*)")
+                    st.error("Please fill in all required fields (*)")
     
     with tab3:
-        st.markdown('<div class="sub-header">✏️ Update Book Details</div>', unsafe_allow_html=True)
+        st.markdown('<div class="sub-header">Update Book Details</div>', unsafe_allow_html=True)
         
         books = load_books()
         
         if not books:
-            st.info("📭 No books available to edit.")
+            st.info("No books available to edit.")
         else:
             if st.session_state.editing_book:
                 selected_book = st.session_state.editing_book
@@ -1969,27 +1969,27 @@ def book_management():
                     
                     col_sub1, col_sub2 = st.columns(2)
                     with col_sub1:
-                        submit = st.form_submit_button("💾 Update Book", type="primary", use_container_width=True)
+                        submit = st.form_submit_button("Update Book", type="primary", use_container_width=True)
                     with col_sub2:
-                        cancel = st.form_submit_button("❌ Cancel", use_container_width=True)
+                        cancel = st.form_submit_button("Cancel", use_container_width=True)
                     
                     if submit:
                         if new_title and new_author and new_book_type:
                             if is_book_duplicate(new_title, new_author, new_isbn, exclude_book=selected_book):
-                                st.error("❌ A book with these details already exists in the library!")
+                                st.error("A book with these details already exists in the library!")
                             else:
                                 update_book_success = update_book(selected_book, new_title, new_author, new_isbn, 
                                                                 new_book_type, new_publisher, new_year, 
                                                                 new_image_file, new_pdf_file, new_category, new_subcategory, 
                                                                 new_description, new_remarks)
                                 if update_book_success:
-                                    st.success(f"✅ Book '{new_title}' updated successfully!")
+                                    st.success(f" Book '{new_title}' updated successfully!")
                                     st.balloons()
                                     st.session_state.editing_book = None
                                     time.sleep(2)
                                     st.rerun()
                         else:
-                            st.error("⚠️ Please fill in all required fields (*)!")
+                            st.error("Please fill in all required fields (*)!")
                     
                     if cancel:
                         st.session_state.editing_book = None
@@ -2033,13 +2033,13 @@ def update_book(selected_book, new_title, new_author, new_isbn, new_book_type, n
 
 def member_management():
     """Member management page with delete functionality"""
-    st.markdown('<div class="main-header">👥 Member Management</div>', unsafe_allow_html=True)
+    st.markdown('<div class="main-header">Member Management</div>', unsafe_allow_html=True)
     
     users = load_users()
     books = load_books()
     members = {k: v for k, v in users.items() if v.get('role') == 'member'}
     
-    st.markdown('<div class="sub-header">🆔 Member ID Management</div>', unsafe_allow_html=True)
+    st.markdown('<div class="sub-header">Member ID Management</div>', unsafe_allow_html=True)
     
     available_ids, taken_ids = load_member_ids()
     
@@ -2056,9 +2056,9 @@ def member_management():
     with col_id1:
         new_id_count = st.number_input("Number of new IDs to generate", min_value=1, max_value=50, value=5)
     with col_id2:
-        if st.button("🆕 Generate New IDs", use_container_width=True):
+        if st.button("Generate New IDs", use_container_width=True):
             create_new_member_ids(new_id_count)
-            st.success(f"✅ Generated {new_id_count} new member IDs!")
+            st.success(f"Generated {new_id_count} new member IDs!")
             time.sleep(2)
             st.rerun()
     
@@ -2092,27 +2092,27 @@ def member_management():
                         
                         if st.button(f"🗑️", key=f"delete_id_{mem_id}", help=f"Delete {mem_id}"):
                             if delete_member_id(mem_id):
-                                st.success(f"✅ Member ID {mem_id} deleted!")
+                                st.success(f"Member ID {mem_id} deleted!")
                                 time.sleep(2)
                                 st.rerun()
                             else:
-                                st.error("❌ Failed to delete member ID.")
+                                st.error("Failed to delete member ID.")
                     else:
                         username = taken_ids.get(mem_id, "Unknown")
                         user_info = users.get(username, {})
                         user_name = user_info.get('name', username)
                         st.markdown(f'<div class="taken-id-badge" title="Assigned to: {user_name}">{mem_id}</div>', unsafe_allow_html=True)
     else:
-        st.info("📭 No member IDs created yet. Generate some new IDs.")
+        st.info("No member IDs created yet. Generate some new IDs.")
     
     st.markdown("---")
-    st.markdown('<div class="sub-header">👤 Member Management</div>', unsafe_allow_html=True)
+    st.markdown('<div class="sub-header">Member Management</div>', unsafe_allow_html=True)
     
     if not members:
-        st.info("📭 No members registered yet.")
+        st.info("No members registered yet.")
         return
     
-    search_term = st.text_input("🔍 Search members", placeholder="Search by name, username, or member ID")
+    search_term = st.text_input(" Search members", placeholder="Search by name, username, or member ID")
     
     filtered_members = members
     if search_term:
@@ -2131,7 +2131,7 @@ def member_management():
                 filtered_members[k] = v
     
     for idx, (username, info) in enumerate(filtered_members.items()):
-        with st.expander(f"👤 {info.get('name', username)} - ID: {info.get('member_id', 'N/A')}", expanded=False):
+        with st.expander(f"{info.get('name', username)} - ID: {info.get('member_id', 'N/A')}", expanded=False):
             col1, col2, col3 = st.columns([2, 1, 1])
             
             with col1:
@@ -2147,44 +2147,44 @@ def member_management():
                     st.markdown('<span class="success-badge">No Books Borrowed</span>', unsafe_allow_html=True)
             
             with col2:
-                if st.button("✏️ Edit", key=f"edit_{username}_{idx}", use_container_width=True):
+                if st.button("Edit", key=f"edit_{username}_{idx}", use_container_width=True):
                     st.session_state.edit_member = username
                     st.rerun()
                 
-                if st.button("📚 View Books", key=f"view_{username}_{idx}", use_container_width=True):
+                if st.button("View Books", key=f"view_{username}_{idx}", use_container_width=True):
                     st.session_state.view_member_books = username
                     st.rerun()
             
             with col3:
                 st.markdown('<div class="delete-button">', unsafe_allow_html=True)
-                if st.button("🗑️ Delete", key=f"delete_member_{username}_{idx}", use_container_width=True):
+                if st.button("Delete", key=f"delete_member_{username}_{idx}", use_container_width=True):
                     st.session_state.confirm_delete = username
                 st.markdown('</div>', unsafe_allow_html=True)
             
             if st.session_state.get('confirm_delete') == username:
                 st.markdown("---")
-                st.warning(f"⚠️ Are you sure you want to delete member '{info.get('name', username)}'?")
+                st.warning(f"Are you sure you want to delete member '{info.get('name', username)}'?")
                 st.markdown('<p class="warning-text">This action cannot be undone. All borrowed books will be returned automatically.</p>', unsafe_allow_html=True)
                 
                 col_confirm1, col_confirm2 = st.columns(2)
                 with col_confirm1:
-                    if st.button("✅ Yes, Delete", key=f"confirm_yes_{username}"):
+                    if st.button("Yes, Delete", key=f"confirm_yes_{username}"):
                         if delete_member(username):
-                            st.success(f"✅ Member '{username}' deleted successfully!")
+                            st.success(f"Member '{username}' deleted successfully!")
                             st.session_state.confirm_delete = None
                             time.sleep(2)
                             st.rerun()
                         else:
-                            st.error("❌ Failed to delete member.")
+                            st.error("Failed to delete member.")
                 
                 with col_confirm2:
-                    if st.button("❌ Cancel", key=f"confirm_no_{username}"):
+                    if st.button("Cancel", key=f"confirm_no_{username}"):
                         st.session_state.confirm_delete = None
                         st.rerun()
             
             if st.session_state.get('view_member_books') == username:
                 st.markdown("---")
-                st.write("**📚 Currently Borrowed Books:**")
+                st.write("**Currently Borrowed Books:**")
                 
                 if borrowed_isbns:
                     borrowed_books_details = []
@@ -2207,9 +2207,9 @@ def member_management():
                             
                             with col_book3:
                                 book_identifier = f"{book['title']} by {book['author']}"
-                                if st.button("↩️ Return", key=f"return_{book_identifier}_{username}_{book_idx}"):
+                                if st.button("Return", key=f"return_{book_identifier}_{username}_{book_idx}"):
                                     if return_book_admin(book):
-                                        st.success(f"✅ Book '{book.get('title')}' returned!")
+                                        st.success(f"Book '{book.get('title')}' returned!")
                                         time.sleep(2)
                                         st.rerun()
                 else:
@@ -2217,7 +2217,7 @@ def member_management():
     
     if st.session_state.get('edit_member'):
         st.markdown("---")
-        st.markdown('<div class="sub-header">✏️ Edit Member</div>', unsafe_allow_html=True)
+        st.markdown('<div class="sub-header">Edit Member</div>', unsafe_allow_html=True)
         
         selected_member = st.session_state.edit_member
         member_info = members[selected_member]
@@ -2236,9 +2236,9 @@ def member_management():
             
             col_btn1, col_btn2 = st.columns(2)
             with col_btn1:
-                submit = st.form_submit_button("💾 Update", type="primary", use_container_width=True)
+                submit = st.form_submit_button("Update", type="primary", use_container_width=True)
             with col_btn2:
-                cancel = st.form_submit_button("❌ Cancel", use_container_width=True)
+                cancel = st.form_submit_button("Cancel", use_container_width=True)
             
             if submit:
                 if new_password and new_password != confirm_password:
@@ -2251,7 +2251,7 @@ def member_management():
                         users[selected_member]['password'] = new_password
                     
                     save_users(users)
-                    st.success(f"✅ Member '{selected_member}' updated!")
+                    st.success(f"Member '{selected_member}' updated!")
                     st.session_state.edit_member = None
                     time.sleep(2)
                     st.rerun()
@@ -2262,7 +2262,7 @@ def member_management():
 
 def reports_page():
     """Reports page"""
-    st.markdown('<div class="main-header">📊 Reports & Analytics</div>', unsafe_allow_html=True)
+    st.markdown('<div class="main-header">Reports & Analytics</div>', unsafe_allow_html=True)
     
     books = load_books()
     users = load_users()
@@ -2270,7 +2270,7 @@ def reports_page():
     col1, col2 = st.columns(2)
     
     with col1:
-        st.markdown('<div class="sub-header">📈 Book Statistics</div>', unsafe_allow_html=True)
+        st.markdown('<div class="sub-header">Book Statistics</div>', unsafe_allow_html=True)
         
         total_books = len(books)
         available_books = sum(1 for b in books if b.get('status') == 'available')
@@ -2287,7 +2287,7 @@ def reports_page():
                 categories[cat] = categories.get(cat, 0) + 1
         
         if categories:
-            st.write("**📚 Books by Physics Category:**")
+            st.write("** Books by Physics Category:**")
             for cat, count in sorted(categories.items(), key=lambda x: x[1], reverse=True)[:5]:
                 percentage = (count / total_books) * 100
                 st.write(f"- **{cat}:** {count} ({percentage:.1f}%)")
@@ -2308,25 +2308,25 @@ def reports_page():
             book_types[btype] = book_types.get(btype, 0) + 1
         
         if book_types:
-            st.write("**📖 Books by Type:**")
+            st.write("**Books by Type:**")
             for btype, count in book_types.items():
                 st.write(f"- **{btype}:** {count}")
     
     st.markdown("---")
-    st.markdown('<div class="export-header">📥 EXPORT DATA</div>', unsafe_allow_html=True)
+    st.markdown('<div class="export-header">EXPORT DATA</div>', unsafe_allow_html=True)
     
     col_exp1, col_exp2, col_exp3 = st.columns(3)
     
     with col_exp1:
-        if st.button("📚 Export Books Data", use_container_width=True):
+        if st.button("Export Books Data", use_container_width=True):
             export_to_excel()
     
     with col_exp2:
-        if st.button("👥 Export Members Data", use_container_width=True):
+        if st.button(" Export Members Data", use_container_width=True):
             export_members_to_excel()
     
     with col_exp3:
-        if st.button("📋 Export Borrowing History", use_container_width=True):
+        if st.button("Export Borrowing History", use_container_width=True):
             export_borrowing_history()
 
 def settings_page():
@@ -2337,36 +2337,36 @@ def settings_page():
     admin_info = users.get(st.session_state.user, {})
     
     with st.form("admin_settings_form"):
-        st.markdown('<div class="sub-header">🔐 Change Password</div>', unsafe_allow_html=True)
+        st.markdown('<div class="sub-header"> Change Password</div>', unsafe_allow_html=True)
         
         current_password = st.text_input("Current Password", type="password")
         new_password = st.text_input("New Password", type="password")
         confirm_password = st.text_input("Confirm New Password", type="password")
         
-        submitted = st.form_submit_button("🔐 Change Password", type="primary", use_container_width=True)
+        submitted = st.form_submit_button(" Change Password", type="primary", use_container_width=True)
         
         if submitted:
             if current_password != admin_info.get('password'):
-                st.error("❌ Current password is incorrect!")
+                st.error(" Current password is incorrect!")
             elif new_password != confirm_password:
-                st.error("❌ New passwords don't match!")
+                st.error("New passwords don't match!")
             elif not new_password:
-                st.error("⚠️ New password cannot be empty!")
+                st.error("New password cannot be empty!")
             else:
                 users[st.session_state.user]['password'] = new_password
                 save_users(users)
-                st.success("✅ Password changed successfully!")
+                st.success(" Password changed successfully!")
                 time.sleep(2)
                 st.rerun()
 
 def member_dashboard():
     """Member dashboard"""
-    st.sidebar.markdown(f"**👤 Member:** {st.session_state.user_info.get('name', st.session_state.user)}")
+    st.sidebar.markdown(f"** Member:** {st.session_state.user_info.get('name', st.session_state.user)}")
     st.sidebar.markdown("---")
     
     menu = st.sidebar.radio(
         "Menu",
-        ["🔍 Browse Books", "👤 Profile", "📥 My PDF Downloads"],
+        ["🔍 Browse Books", " Profile", " My PDF Downloads"],
         index=0
     )
     
@@ -2438,7 +2438,7 @@ def member_dashboard():
                             book_key = generate_book_key(book)
                             
                             if book.get('book_type') == 'E-Book' and book.get('pdf_filename'):
-                                if st.button("📥 Download PDF", key=f"download_{book_key}_{idx}", use_container_width=True):
+                                if st.button(" Download PDF", key=f"download_{book_key}_{idx}", use_container_width=True):
                                     pdf_path = get_pdf_path(book['pdf_filename'])
                                     if pdf_path and os.path.exists(pdf_path):
                                         record_download(book['title'], book['author'], st.session_state.user)
@@ -2446,29 +2446,29 @@ def member_dashboard():
                                         with open(pdf_path, "rb") as pdf_file:
                                             pdf_data = pdf_file.read()
                                             st.download_button(
-                                                label="⬇️ Click to Download PDF",
+                                                label=" Click to Download PDF",
                                                 data=pdf_data,
                                                 file_name=f"{book['title'].replace(' ', '_')}.pdf",
                                                 mime="application/pdf",
                                                 key=f"pdf_download_{book_key}_{idx}"
                                             )
-                                        st.success(f"✅ Downloading '{book['title']}' PDF!")
+                                        st.success(f" Downloading '{book['title']}' PDF!")
                                     else:
-                                        st.error("❌ PDF file not available for download.")
+                                        st.error(" PDF file not available for download.")
                             else:
                                 if book.get('status') == 'available':
-                                    st.info("📚 Contact librarian to borrow this book")
+                                    st.info(" Contact librarian to borrow this book")
                                 else:
-                                    st.info("📖 Currently borrowed - Check back later")
+                                    st.info(" Currently borrowed - Check back later")
                             
                             st.markdown('</div>', unsafe_allow_html=True)
             else:
-                st.info("📭 No books match your search criteria.")
+                st.info(" No books match your search criteria.")
         else:
-            st.info("📚 No books available at the moment. Check back later!")
+            st.info(" No books available at the moment. Check back later!")
     
-    elif menu == "👤 Profile":
-        st.markdown('<div class="main-header">👤 My Profile</div>', unsafe_allow_html=True)
+    elif menu == " Profile":
+        st.markdown('<div class="main-header"> My Profile</div>', unsafe_allow_html=True)
         
         users = load_users()
         member_info = users.get(st.session_state.user, {})
@@ -2478,40 +2478,40 @@ def member_dashboard():
             
             with col1:
                 st.markdown('<div class="card">', unsafe_allow_html=True)
-                st.markdown("#### 📋 Personal Information")
-                st.write(f"**👤 Name:** {member_info.get('name', 'N/A')}")
-                st.write(f"**📧 Email:** {member_info.get('email', 'N/A')}")
-                st.write(f"**🆔 Member ID:** {member_info.get('member_id', 'N/A')}")
-                st.write(f"**👤 Username:** `{st.session_state.user}`")
-                st.write(f"**📚 Books Currently Borrowed:** {len(member_info.get('borrowed_books', []))}")
+                st.markdown("####  Personal Information")
+                st.write(f"** Name:** {member_info.get('name', 'N/A')}")
+                st.write(f"** Email:** {member_info.get('email', 'N/A')}")
+                st.write(f"** Member ID:** {member_info.get('member_id', 'N/A')}")
+                st.write(f"** Username:** `{st.session_state.user}`")
+                st.write(f"** Books Currently Borrowed:** {len(member_info.get('borrowed_books', []))}")
                 st.markdown('</div>', unsafe_allow_html=True)
             
             with col2:
                 st.markdown('<div class="card">', unsafe_allow_html=True)
-                st.markdown("#### 🔐 Change Password")
+                st.markdown("####  Change Password")
                 
                 with st.form("member_password_form"):
                     current_pass = st.text_input("Current Password", type="password")
                     new_pass = st.text_input("New Password", type="password")
                     confirm_pass = st.text_input("Confirm New Password", type="password")
                     
-                    if st.form_submit_button("🔐 Update Password", type="primary", use_container_width=True):
+                    if st.form_submit_button(" Update Password", type="primary", use_container_width=True):
                         if current_pass != member_info.get('password'):
-                            st.error("❌ Current password is incorrect!")
+                            st.error(" Current password is incorrect!")
                         elif new_pass != confirm_pass:
-                            st.error("❌ New passwords don't match!")
+                            st.error(" New passwords don't match!")
                         elif not new_pass:
-                            st.error("⚠️ New password cannot be empty!")
+                            st.error(" New password cannot be empty!")
                         else:
                             users[st.session_state.user]['password'] = new_pass
                             save_users(users)
-                            st.success("✅ Password updated successfully!")
+                            st.success(" Password updated successfully!")
                             time.sleep(2)
                             st.rerun()
                 st.markdown('</div>', unsafe_allow_html=True)
     
-    elif menu == "📥 My PDF Downloads":
-        st.markdown('<div class="main-header">📥 My PDF Downloads</div>', unsafe_allow_html=True)
+    elif menu == " My PDF Downloads":
+        st.markdown('<div class="main-header"> My PDF Downloads</div>', unsafe_allow_html=True)
         
         download_history = load_download_history()
         users = load_users()
@@ -2565,7 +2565,7 @@ def member_dashboard():
                                 with open(pdf_path, "rb") as pdf_file:
                                     pdf_data = pdf_file.read()
                                     st.download_button(
-                                        label="📥 Download Again",
+                                        label=" Download Again",
                                         data=pdf_data,
                                         file_name=f"{data['title'].replace(' ', '_')}.pdf",
                                         mime="application/pdf",
@@ -2701,12 +2701,12 @@ def export_to_excel():
         csv_data = output.getvalue()
         
         st.download_button(
-            label="📥 Download Books Data (CSV)",
+            label="Download Books Data (CSV)",
             data=csv_data,
             file_name=f"amo_physics_library_books_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv",
             mime="text/csv"
         )
-        st.success("✅ Books data exported successfully!")
+        st.success("Books data exported successfully!")
     else:
         st.warning("No books to export!")
 
@@ -2738,12 +2738,12 @@ def export_members_to_excel():
         csv_data = output.getvalue()
         
         st.download_button(
-            label="📥 Download Members Data (CSV)",
+            label=" Download Members Data (CSV)",
             data=csv_data,
             file_name=f"amo_physics_library_members_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv",
             mime="text/csv"
         )
-        st.success("✅ Members data exported successfully!")
+        st.success(" Members data exported successfully!")
     else:
         st.warning("No members to export!")
 
@@ -2773,12 +2773,12 @@ def export_borrowing_history():
         csv_data = output.getvalue()
         
         st.download_button(
-            label="📥 Download Borrowing History (CSV)",
+            label=" Download Borrowing History (CSV)",
             data=csv_data,
             file_name=f"amo_physics_library_borrowing_history_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv",
             mime="text/csv"
         )
-        st.success("✅ Borrowing history exported successfully!")
+        st.success(" Borrowing history exported successfully!")
     else:
         st.warning("No borrowing history to export!")
 
